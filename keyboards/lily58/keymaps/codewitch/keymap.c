@@ -123,7 +123,9 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 #ifdef OLED_DRIVER_ENABLE
 
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  return rotation;
+  if (!is_keyboard_master())
+    return OLED_ROTATION_0;  // flips the display 180 degrees if offhand
+  return OLED_ROTATION_270;
 }
 
 // When you add source files to SRC in rules.mk, you can use functions.
@@ -213,11 +215,13 @@ static void render_bongo_cat(void) {
 void oled_task_user(void) {
   if (is_keyboard_master()) {
     // If you want to change the display of OLED, you need to change here
-    render_bongo_cat();
-  } else {
     oled_write_ln(read_layer_state(), false);
+    oled_write_ln(PSTR(""), false);
     oled_write_ln(read_keylog(), false);
+    oled_write_ln(PSTR(""), false);
     oled_write_ln(read_keylogs(), false);
+  } else {
+    render_bongo_cat();
   }
 }
 #endif // OLED_DRIVER_ENABLE

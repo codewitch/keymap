@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 // OLED setup
+/*
 #define IDLE_FRAMES 5
 #define IDLE_SPEED 30
 #define TAP_FRAMES 2
@@ -16,6 +17,7 @@ uint8_t  current_idle_frame = 0;
 uint8_t  current_tap_frame  = 0;
 
 static long int oled_timeout = OLED_TIMEOUT;  // 10 minutes
+*/
 
 
 enum layer_number {
@@ -134,6 +136,7 @@ void set_keylog(uint16_t keycode, keyrecord_t *record);
 const char *read_keylog(void);
 const char *read_keylogs(void);
 
+/*
 static void render_bongo_cat(void) {
 
     // Idle animation
@@ -211,6 +214,7 @@ static void render_bongo_cat(void) {
         }
     }
 }
+*/
 
 void oled_task_user(void) {
   if (is_keyboard_master()) {
@@ -221,7 +225,7 @@ void oled_task_user(void) {
     oled_write_ln(PSTR(""), false);
     oled_write_ln(read_keylogs(), false);
   } else {
-    render_bongo_cat();
+    //render_bongo_cat();
   }
 }
 #endif // OLED_DRIVER_ENABLE
